@@ -8,6 +8,19 @@ $(document).ready(function(){
 		// Stop the form from leaving the page!
 		event.preventDefault();
 
+		// All fields are mandatory
+		$('input').each(function(){
+			var currentTagClass = $(this).attr('class');
+			var errorClass = '.' + currentTagClass + '-error';
+			console.log(errorClass);
+			if($(this).val() == ''){
+				$(errorClass).html('Fields cannot be empty');
+				$(errorClass).show();
+			}else{
+				$(errorClass).hide();
+			}
+		});
+
 		// Check the length of the name input field
 		var fullNameVariable = $('.fullName').val();
 		if(fullNameVariable.length < 3){
@@ -39,10 +52,14 @@ $(document).ready(function(){
 			$('.password-error').show();
 		}else if(!numberFound){
 			// JS couldnt find a number or it would be true!
-			$('.password-error').html('Your password must contain a number!')
+			// $('.password-error').html('Your password must contain a number!')
+			$('.password-error').html('Your password is weak. Consider adding a number.');
+			$('.password-error').addClass('caution');			
 			$('.password-error').show();			
 		}else{
 			$('.password-error').hide();
+			$('.password-error').removeClass('caution');			
+
 		}
 
 	})
